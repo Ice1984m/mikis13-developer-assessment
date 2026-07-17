@@ -1,0 +1,62 @@
+name: Mikis13 Developer Assessment
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  examen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Repository ophalen
+        uses: actions/checkout@v4
+
+      - name: Node installeren
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Broncode controleren
+        run: npm run check
+
+      - name: Examentests uitvoeren
+        run: npm test
+
+      - name: Volledige validatie
+        run: npm run validate
+
+      - name: Bewijsrapport maken
+        shell: bash
+        run: |
+          mkdir -p proof
+
+          {
+            echo "# Mikis13 Developer Assessment"
+            echo
+            echo "Status: GESLAAGD"
+            echo "Commit: $GITHUB_SHA"
+            echo "Runnummer: $GITHUB_RUN_NUMBER"
+            echo "Datum: $(date -u)"
+            echo
+            echo "- JavaScript geslaagd"
+            echo "- Foutafhandeling geslaagd"
+            echo "- Automatische tests geslaagd"
+            echo "- GitHub Actions geslaagd"
+            echo
+            echo "Intern praktijkexamen."
+          } > proof/resultaat.md
+
+      - name: Bewijs bewaren
+        uses: actions/upload-artifact@v4
+        with:
+          name: mikis13-examen-bewijs
+          path: proof/resultaat.md
+          if-no-files-found: error

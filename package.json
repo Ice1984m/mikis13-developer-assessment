@@ -1,0 +1,10 @@
+{
+  "name": "mikis13-developer-assessment",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node --check src/examen.js && node --check tests/examen.test.js",
+    "test": "node tests/examen.test.js",
+    "validate": "npm run check && npm test"
+  }
+}

@@ -55,7 +55,7 @@ jobs:
           } > proof/resultaat.md
 
       - name: Bewijs bewaren
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: mikis13-examen-bewijs
           path: proof/resultaat.md
